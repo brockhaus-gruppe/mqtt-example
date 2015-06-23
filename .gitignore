@@ -12,3 +12,6 @@
 hs_err_pid*
 /target/
 /80-86-F2-08-A0-7A-pub-tcpbrokermqttdashboardcom1883/
+/.settings/
+/.classpath
+/.project
