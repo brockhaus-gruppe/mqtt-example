@@ -1,8 +1,11 @@
 package de.brockhaus.m2m.mqtt.publisher;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
@@ -24,6 +27,8 @@ import de.brockhaus.m2m.mqtt.util.MQTTUtil.ClientType;
  */
 public class MQTTPublisher {
 	
+	private static final Logger LOG = Logger.getLogger(MQTTPublisher.class);
+	
 	private MqttClient client;
 	private MqttTopic topic;
 	
@@ -36,7 +41,7 @@ public class MQTTPublisher {
 		client.init();
 		client.publish();
 		
-		System.exit(0);
+//		System.exit(0);
 	}
 	
 	
@@ -49,13 +54,20 @@ public class MQTTPublisher {
 		String json = JSONBuilderParserUtil.getInstance().toJSON(poMsg);
 		
 		MqttMessage msg = new MqttMessage();
+		// quality of service, see: https://www.eclipse.org/paho/files/mqttdoc/Cclient/qos.html
+		msg.setQos(1);
 		
 		// here's the beef ... we turn it into bytes
 		msg.setPayload(json.getBytes());
 		
+		// will be stored regardless what happens
+		msg.setRetained(true);
+		
 		try {
 			// off you go ...
 			topic.publish(msg);
+			LOG.debug("\n Message send: \n" + json);
+			
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
@@ -64,9 +76,20 @@ public class MQTTPublisher {
 	private void init() {
 		try {
 			client = new MQTTUtil().getClient(ClientType.TYPE_PUBLISHER);
-			client.connect();
+			
+			// setting the options
+			MqttConnectOptions options = new MqttConnectOptions();
+			options.setWill(this.topicName, ("I'm gone: " + this.client.getClientId().toString()).getBytes("UTF-8"), 1, true);
+			
+			// you might put the options here
+			client.connect(options);
+			
 			topic = client.getTopic(topicName);
+			
 		} catch (MqttException e) {
+			e.printStackTrace();
+			
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}

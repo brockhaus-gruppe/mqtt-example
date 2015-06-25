@@ -30,7 +30,7 @@ public class MQTTSubscriptionCallBack implements MqttCallback {
 				+ message.toString());
 		
 		// we can convert to a Java object, ... save the data ... whatever comes to our mind
-		JSONBuilderParserUtil.getInstance().fromJSON(ProductionOrderMessage.class, message.toString());
+//		JSONBuilderParserUtil.getInstance().fromJSON(ProductionOrderMessage.class, message.toString());
 
 		// check out for the last will
 		if ("home/LWT".equals(topic)) {
@@ -39,10 +39,10 @@ public class MQTTSubscriptionCallBack implements MqttCallback {
 	}
 	
 	public void connectionLost(Throwable cause) {
-		// lazy
+		LOG.warn("Connection lost");
 	}
 
 	public void deliveryComplete(IMqttDeliveryToken token) {
-		// lazy
+		LOG.trace("Message delivered");
 	}
 }
