@@ -1,7 +1,6 @@
 package de.brockhaus.m2m.mqtt.publisher;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -12,8 +11,8 @@ import org.eclipse.paho.client.mqttv3.MqttTopic;
 
 import de.brockhaus.m2m.mqtt.util.JSONBuilderParserUtil;
 import de.brockhaus.m2m.mqtt.util.MQTTUtil;
-import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 import de.brockhaus.m2m.mqtt.util.MQTTUtil.ClientType;
+import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 
 /**
  * Test-driver to push data into the system
@@ -35,25 +34,18 @@ public class MQTTPublisher {
 	// you can hierarchically structure further on, i.e. for every nfc reader
 	private String topicName = "nfc/ABC999";
 	
-	// we don't make use of JUnit in this project, so ...
-	public static void main(String[] args) {
-		MQTTPublisher client = new MQTTPublisher();
-		client.init();
-		client.publish();
-		
-//		System.exit(0);
+	public MQTTPublisher() {
+		this.init();
 	}
 	
-	
-	private void publish() {
+	// sending the message 2 MQTT broker
+	public void publish(ProductionOrderMessage message) {
 		
-		// creating just a message
-		ProductionOrderMessage poMsg = new ProductionOrderMessage("Station-ABC999", "PO-123456789-ABCD", new Date(System.currentTimeMillis()));
-
 		// converting the message to JSON
-		String json = JSONBuilderParserUtil.getInstance().toJSON(poMsg);
+		String json = JSONBuilderParserUtil.getInstance().toJSON(message);
 		
 		MqttMessage msg = new MqttMessage();
+		
 		// quality of service, see: https://www.eclipse.org/paho/files/mqttdoc/Cclient/qos.html
 		msg.setQos(1);
 		
@@ -80,6 +72,7 @@ public class MQTTPublisher {
 			// setting the options
 			MqttConnectOptions options = new MqttConnectOptions();
 			options.setWill(this.topicName, ("I'm gone: " + this.client.getClientId().toString()).getBytes("UTF-8"), 1, true);
+			options.setCleanSession(true);
 			
 			// you might put the options here
 			client.connect(options);

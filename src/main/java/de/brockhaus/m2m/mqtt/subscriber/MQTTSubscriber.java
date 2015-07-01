@@ -16,29 +16,19 @@ import de.brockhaus.m2m.mqtt.util.MQTTUtil.ClientType;
  * @author mbohnen, Jun 23, 2015
  *
  */
-public class MQTTTestSubscriber {
+public class MQTTSubscriber {
 
 	private MqttClient mqttClient;
 
-	// as we don't have JUbit tests in here ...
-	public static void main(String... args) {
-		MQTTTestSubscriber subscriber = new MQTTTestSubscriber();
-		subscriber.start();
-	}
-
-	public MQTTTestSubscriber() {
-
-		try {
-			mqttClient = new MQTTUtil().getClient(
-					ClientType.TYPE_SUBSCRIBER);
-		} catch (MqttException e) {
-			e.printStackTrace();
-		}
+	public MQTTSubscriber() {
+		this.start();
 	}
 
 	public void start() {
+		
 		try {
-
+			mqttClient = new MQTTUtil().getClient(
+					ClientType.TYPE_SUBSCRIBER);
 			mqttClient.setCallback(new MQTTSubscriptionCallBack());
 			mqttClient.connect();
 
