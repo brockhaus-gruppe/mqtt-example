@@ -48,11 +48,9 @@ public class MQTTPublisher {
 		MqttMessage msg = new MqttMessage();
 		
 		// quality of service, see: https://www.eclipse.org/paho/files/mqttdoc/Cclient/qos.html
-		msg.setQos(1);
-		
+		msg.setQos(1);	
 		// here's the beef ... we turn it into bytes
 		msg.setPayload(json.getBytes());
-		
 		// will be stored regardless what happens
 		msg.setRetained(true);
 		
