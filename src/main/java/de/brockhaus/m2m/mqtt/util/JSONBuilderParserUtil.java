@@ -24,9 +24,15 @@ public class JSONBuilderParserUtil {
 
 	private static final JSONBuilderParserUtil THIS = new JSONBuilderParserUtil();
 	private ObjectMapper objectMapper = new ObjectMapper();
+	private static boolean formatted;
 
 	private JSONBuilderParserUtil() {
 		// lazy
+	}
+	
+	public static JSONBuilderParserUtil getInstance(boolean formatted) {
+		JSONBuilderParserUtil.formatted = formatted;
+		return THIS;
 	}
 
 	public static JSONBuilderParserUtil getInstance() {
@@ -39,7 +45,11 @@ public class JSONBuilderParserUtil {
 
 		try {
 			objectMapper.setSerializationInclusion(Include.NON_NULL);
-			ret = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+			if(formatted) {
+				ret = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+			} else {
+				ret = objectMapper.writeValueAsString(o);
+			}
 		} catch (JsonProcessingException e) {
 
 			e.printStackTrace();

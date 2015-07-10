@@ -12,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttTopic;
 import de.brockhaus.m2m.mqtt.util.JSONBuilderParserUtil;
 import de.brockhaus.m2m.mqtt.util.MQTTUtil;
 import de.brockhaus.m2m.mqtt.util.MQTTUtil.ClientType;
+import de.brockhaus.m2m.mqtt.util.MQTTUtil.PersistenceType;
 import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 
 /**
@@ -67,7 +68,7 @@ public class MQTTPublisher {
 	
 	private void init() {
 		try {
-			client = new MQTTUtil().getClient(ClientType.TYPE_PUBLISHER);
+			client = new MQTTUtil().getClient(ClientType.TYPE_PUBLISHER, PersistenceType.TYPE_MEMORY);
 			
 			// setting the options
 			MqttConnectOptions options = new MqttConnectOptions();

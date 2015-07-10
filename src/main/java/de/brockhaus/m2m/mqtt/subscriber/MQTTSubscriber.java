@@ -1,10 +1,13 @@
 package de.brockhaus.m2m.mqtt.subscriber;
 
+import java.lang.management.MemoryType;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import de.brockhaus.m2m.mqtt.util.MQTTUtil;
 import de.brockhaus.m2m.mqtt.util.MQTTUtil.ClientType;
+import de.brockhaus.m2m.mqtt.util.MQTTUtil.PersistenceType;
 
 /**
  * The 'autonomous' stand-alone receiver ...
@@ -28,7 +31,7 @@ public class MQTTSubscriber {
 		
 		try {
 			mqttClient = new MQTTUtil().getClient(
-					ClientType.TYPE_SUBSCRIBER);
+					ClientType.TYPE_SUBSCRIBER, PersistenceType.TYPE_MEMORY);
 			mqttClient.setCallback(new MQTTSubscriptionCallBack());
 			mqttClient.connect();
 
