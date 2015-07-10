@@ -13,7 +13,9 @@ import de.brockhaus.m2m.mqtt.util.JSONBuilderParserUtil;
 import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 
 /**
- * This wrapper is meant to get called by python and delegate the sending ...
+ * This wrapper is meant to get called by python and delegates the sending to MQTT Broker...
+ * 
+ * Be aware of the pom.xml, you might need to change the <mainClass> entry
  * 
  * Project: mqtt-example
  *

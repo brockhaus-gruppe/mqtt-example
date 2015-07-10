@@ -13,7 +13,10 @@ import de.brockhaus.m2m.mqtt.util.JSONBuilderParserUtil;
 import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 
 /**
- * This wrapper is meant to get called by python and delegate the sending ...
+ * This wrapper is meant to be invoked by socket-based communication 
+ * and delegates the publishing to MQTT Broker...
+ * 
+ * Be aware of the pom.xml, you might need to change the <mainClass> entry
  * 
  * Project: mqtt-example
  *
@@ -31,7 +34,10 @@ public class MQTTPublisherSocketWrapper {
 
 	public static void main(String[] args) {
 		MQTTPublisherSocketWrapper wrapper = new MQTTPublisherSocketWrapper();
-		wrapper.init();
+	}
+	
+	public MQTTPublisherSocketWrapper() {
+		this.init();
 	}
 
 	private void init() {
@@ -76,7 +82,7 @@ public class MQTTPublisherSocketWrapper {
 
 		ProductionOrderMessage message = JSONBuilderParserUtil.getInstance()
 				.fromJSON(ProductionOrderMessage.class, json);
-//		publisher.publish(message);
+		publisher.publish(message);
 	}
 
 }

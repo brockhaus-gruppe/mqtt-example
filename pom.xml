@@ -46,7 +46,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>de.brockhaus.m2m.mqtt.publisher.MQTTPublisherPythonWrapper</mainClass>
+									<mainClass>de.brockhaus.m2m.mqtt.publisher.MQTTPublisherSocketWrapper</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

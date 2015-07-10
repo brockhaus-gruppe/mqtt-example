@@ -12,6 +12,8 @@ import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
  * We read some values from the command line, convert them into a
  * ProductionOrderMessage and off we go ...
  * 
+ * Not a JUnit test.
+ * 
  * Project: mqtt-example
  *
  * Copyright (c) by Brockhaus Group www.brockhaus-gruppe.de
