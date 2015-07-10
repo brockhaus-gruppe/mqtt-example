@@ -1,6 +1,7 @@
 package de.brockhaus.m2m.mqtt.subscriber;
 
 /**
+ * Bringing up the subscriber 
  * 
  * Project: mqtt-example
  *

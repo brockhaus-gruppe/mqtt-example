@@ -25,6 +25,7 @@ public class MQTTPublisherPythonWrapperTest {
 
 	private static final Logger LOG = Logger.getLogger(MQTTPublisherPythonWrapperTest.class);
 
+	// just any
 	private static String deviceId = "00AAFF";
 
 	private static Scanner scanner;

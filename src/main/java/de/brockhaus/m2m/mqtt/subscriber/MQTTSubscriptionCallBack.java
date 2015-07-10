@@ -5,9 +5,6 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import de.brockhaus.m2m.mqtt.util.JSONBuilderParserUtil;
-import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
-
 /**
  * The one doing the work upon receiving a message ... 
  * Looks a little like the well-known MessageListener interface in JMS
@@ -26,8 +23,7 @@ public class MQTTSubscriptionCallBack implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message)
 			throws Exception {
 		
-		LOG.debug("Message arrived! Topic: " + topic + " Message: "
-				+ message.toString());
+		LOG.debug("Message arrived! Topic: " + topic + " Message: "	+ message.toString());
 		
 		// we can convert to a Java object, ... save the data ... whatever comes to our mind
 //		JSONBuilderParserUtil.getInstance().fromJSON(ProductionOrderMessage.class, message.toString());

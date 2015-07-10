@@ -30,6 +30,7 @@ public class JSONBuilderParserUtil {
 		// lazy
 	}
 	
+	// you can get it in a nice format ...
 	public static JSONBuilderParserUtil getInstance(boolean formatted) {
 		JSONBuilderParserUtil.formatted = formatted;
 		return THIS;

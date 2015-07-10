@@ -30,8 +30,7 @@ public class MQTTSubscriber {
 	public void start() {
 		
 		try {
-			mqttClient = new MQTTUtil().getClient(
-					ClientType.TYPE_SUBSCRIBER, PersistenceType.TYPE_MEMORY);
+			mqttClient = new MQTTUtil().getClient(ClientType.TYPE_SUBSCRIBER, PersistenceType.TYPE_MEMORY);
 			mqttClient.setCallback(new MQTTSubscriptionCallBack());
 			mqttClient.connect();
 

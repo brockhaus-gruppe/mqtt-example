@@ -16,7 +16,7 @@ import de.brockhaus.m2m.mqtt.util.MQTTUtil.PersistenceType;
 import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 
 /**
- * Test-driver to push data into the system
+ * The access point to push data to the broker.
  * 
  * Project: mqtt-example
  *
