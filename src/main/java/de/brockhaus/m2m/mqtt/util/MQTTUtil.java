@@ -6,10 +6,11 @@ import java.util.Collections;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
- * Some useful thing to get a MQTTClient. Later on everything will be configured
- * by Spring DI, then it will become a Singleton automatically
+ * Some useful thing to get a MQTTClient. Later on maybe everything will be configured
+ * by Spring DI, then it will become a Singleton automatically.
  * 
  * Project: mqtt-example
  *
@@ -24,8 +25,14 @@ public class MQTTUtil {
 	// the local broker: "tcp://localhost:1883"
 	public String brokerURL = "tcp://broker.mqttdashboard.com:1883";
 
+	// the type of client we want to connect
 	public enum ClientType {
 		TYPE_PUBLISHER, TYPE_SUBSCRIBER
+	};
+	
+	// the type of memory we want to use
+	public enum PersistenceType {
+		TYPE_MEMORY, TYPE_FILE
 	};
 
 	private MqttClient client;
@@ -34,10 +41,12 @@ public class MQTTUtil {
 		// lazy
 	}
 
-	public MqttClient getClient(ClientType type) throws MqttException {
+	// you can only connect once under this id, 
+	// if another client will connect under this id, the first one will be disconnected
+	public MqttClient getClient(ClientType clientType, PersistenceType persistenceType) throws MqttException {
 		String clientId = "";
 
-		switch (type) {
+		switch (clientType) {
 			case TYPE_PUBLISHER:
 				clientId = this.getMacAddress() + "-pub";
 				break;
@@ -46,9 +55,12 @@ public class MQTTUtil {
 				break;
 		}
 
-		// you can only connect once under this id, 
-		// if another client will connect under this id, the first one will be disconnected
-		client = new MqttClient(brokerURL, clientId);
+		if(persistenceType == PersistenceType.TYPE_MEMORY) 
+		{
+			client = new MqttClient(brokerURL, clientId, new MemoryPersistence());
+		} else {
+			client = new MqttClient(brokerURL, clientId);
+		}
 
 		return client;
 	}
