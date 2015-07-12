@@ -20,7 +20,7 @@ date = datetime.datetime.now() #http://www.saltycrane.com/blog/2008/06/how-to-ge
 p = subprocess.Popen(["java", '-jar', 'mqtt-example-0.0.1-SNAPSHOT.jar'], stdin=subprocess.PIPE)
 
 def do_send(message):	
-	print("Sending from python: "+ message)
+	print("Sending from python at: " + date + ": "+ message)
 	p.stdin.write(message)
 	p.stdin.flush()
 

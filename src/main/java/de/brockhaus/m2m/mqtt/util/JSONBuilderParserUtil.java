@@ -8,6 +8,8 @@ import java.io.IOException;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 /**
@@ -27,7 +29,9 @@ public class JSONBuilderParserUtil {
 	private static boolean formatted;
 
 	private JSONBuilderParserUtil() {
-		// lazy
+		
+		// using ISO format
+		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 	}
 	
 	// you can get it in a nice format ...
@@ -36,6 +40,7 @@ public class JSONBuilderParserUtil {
 		return THIS;
 	}
 
+	// or just the standard
 	public static JSONBuilderParserUtil getInstance() {
 		return THIS;
 	}

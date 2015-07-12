@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Something which might come from a NFC Reader ...
  * 
@@ -19,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProductionOrderMessage implements Serializable {
 	
 	private String senderId;
+	
 	private String productionOrderId;
 	
 	private Date date;

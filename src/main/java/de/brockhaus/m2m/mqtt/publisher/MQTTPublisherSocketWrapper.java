@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -80,8 +81,10 @@ public class MQTTPublisherSocketWrapper {
 
 	private void doSend(String json) {
 
-		ProductionOrderMessage message = JSONBuilderParserUtil.getInstance()
-				.fromJSON(ProductionOrderMessage.class, json);
+		ProductionOrderMessage message = JSONBuilderParserUtil.getInstance().fromJSON(ProductionOrderMessage.class, json);
+
+		// setting the date, might be done within the python script as well
+		message.setDate(new Date(System.currentTimeMillis()));
 		publisher.publish(message);
 	}
 

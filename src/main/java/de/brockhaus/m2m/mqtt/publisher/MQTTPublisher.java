@@ -18,6 +18,8 @@ import de.brockhaus.m2m.mqtt.util.ProductionOrderMessage;
 /**
  * The access point to push data to the broker.
  * 
+ * TODO: external configuration of topic
+ * 
  * Project: mqtt-example
  *
  * Copyright (c) by Brockhaus Group
@@ -37,6 +39,10 @@ public class MQTTPublisher {
 	
 	public MQTTPublisher() {
 		this.init();
+	}
+	
+	public MQTTPublisher(String topic) {
+		this.topicName = topic;
 	}
 	
 	// sending the message 2 MQTT broker
