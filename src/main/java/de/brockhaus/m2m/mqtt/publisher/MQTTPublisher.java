@@ -35,6 +35,7 @@ public class MQTTPublisher {
 	private MqttTopic topic;
 	
 	// you can hierarchically structure further on, i.e. for every nfc reader
+	// or every sensor
 	private String topicName = "nfc/ABC999";
 	
 	public MQTTPublisher() {
@@ -76,10 +77,12 @@ public class MQTTPublisher {
 			
 			// setting the options
 			MqttConnectOptions options = new MqttConnectOptions();
+			// setting last will
 			options.setWill(this.topicName, ("I'm gone: " + this.client.getClientId().toString()).getBytes("UTF-8"), 1, true);
+			// housekeeping
 			options.setCleanSession(true);
 			
-			// you might put the options here
+			// connect to broker (and you might put the options here)
 			client.connect(options);
 			
 			topic = client.getTopic(topicName);
@@ -91,5 +94,4 @@ public class MQTTPublisher {
 			e.printStackTrace();
 		}
 	}
-
 }

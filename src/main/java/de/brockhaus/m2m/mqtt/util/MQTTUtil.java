@@ -3,7 +3,9 @@ package de.brockhaus.m2m.mqtt.util;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
+import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -21,9 +23,14 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class MQTTUtil {
 
+	private static final Logger LOG = Logger.getLogger(MQTTUtil.class);
+	
 	// public broker: "tcp://broker.mqttdashboard.com:1883", "tcp://iot.eclipse.org:1883"
 	// the local broker: "tcp://localhost:1883"
-	public String brokerURL = "tcp://broker.mqttdashboard.com:1883";
+	public String brokerURL = "tcp://iot.eclipse.org:1883";
+	
+	// random integer allows to run two instances on the same machine
+	int seed = new Random().nextInt(9);
 
 	// the type of client we want to connect
 	public enum ClientType {
@@ -43,15 +50,16 @@ public class MQTTUtil {
 
 	// you can only connect once under this id, 
 	// if another client will connect under this id, the first one will be disconnected
+	// the id should not be longer than 23 characters
 	public MqttClient getClient(ClientType clientType, PersistenceType persistenceType) throws MqttException {
 		String clientId = "";
 
 		switch (clientType) {
 			case TYPE_PUBLISHER:
-				clientId = this.getMacAddress() + "-pub";
+				clientId = this.getMacAddress() + seed; //"-pub";
 				break;
 			case TYPE_SUBSCRIBER:
-				clientId = this.getMacAddress() + "-sub";
+				clientId = this.getMacAddress() + seed; //"-sub";
 				break;
 		}
 
@@ -61,7 +69,9 @@ public class MQTTUtil {
 		} else {
 			client = new MqttClient(brokerURL, clientId);
 		}
-
+		
+		LOG.debug("Connected: " + brokerURL + " client: " + clientId);
+		
 		return client;
 	}
 
