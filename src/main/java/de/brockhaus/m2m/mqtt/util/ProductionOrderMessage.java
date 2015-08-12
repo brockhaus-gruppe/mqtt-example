@@ -63,5 +63,5 @@ public class ProductionOrderMessage implements Serializable {
 	}
 	
 	
-
+	//TODO implement hashCode, equals and toString
 }

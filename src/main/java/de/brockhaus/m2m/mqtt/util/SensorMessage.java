@@ -55,4 +55,6 @@ public class SensorMessage implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	//TODO implement hashCode, equals and toString
 }
